@@ -10,8 +10,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]private float jumpForce = 200f;
     [SerializeField]private int MaxJumpCount = 2;
     [SerializeField] private SpriteRenderer sr;
-    [SerializeField]private float leftLimit = -9.81f;
-    [SerializeField]private float rightLimit = 9.81f;
+    private float leftLimit = -9.81f;
+    private float rightLimit = 9.81f;
     private int jumpCount = 0;
     private InputSystem_Actions inputSystem;
     private bool isInversed = false;
@@ -47,33 +47,23 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
-        float moveDirection = 0;
-
+        float moveDirectionX = 0;
+        
         if (Touch.activeTouches.Count > 0)
         {
             Vector2 screenPos = Touch.activeTouches[0].screenPosition;
-            moveDirection = MoveDirection(screenPos);
+            moveDirectionX = MoveDirection(screenPos);
         }
         else
         {
-            moveDirection = 0;
+            moveDirectionX = 0;
         }
-        if (isInversed)
-        {
-            rb.linearVelocityX = moveDirection * -speed;
-        }
-        else
-        {
-            rb.linearVelocityX = moveDirection * speed;
-        }
-
-        if (transform.position.x >= rightLimit)
-        {
-            transform.position = new Vector3(rightLimit, transform.position.y, transform.position.z);
-        }else if (transform.position.x <= leftLimit)
-        {
-            transform.position = new Vector3(leftLimit, transform.position.y, transform.position.z);
-        }
+        
+        float directionMultiplier = isInversed ? -1f : 1f;
+        rb.linearVelocityX = moveDirectionX * speed * directionMultiplier;
+        
+        float clampedX = Mathf.Clamp(transform.position.x, leftLimit, rightLimit);
+        transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
     }
     
 
