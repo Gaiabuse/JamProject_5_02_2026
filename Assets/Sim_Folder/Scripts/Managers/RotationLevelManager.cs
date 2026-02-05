@@ -19,7 +19,8 @@ namespace SimsFolder.Scripting.Manager
 
 
         [Header("Rotation Level")]
-        [SerializeField] private Vector2 rotationMapLevl0; //est utile pour touts les levels levels
+        [SerializeField] private float rotationMap; //est utile pour touts les levels levels
+        [SerializeField]private currentRotationLevel currentLevel = currentRotationLevel.level0;
         
         private int currentLevelRotation = 0;
         private Vector2 baseRotation = Vector2.zero;
@@ -43,24 +44,29 @@ namespace SimsFolder.Scripting.Manager
         /// </summary>
         public void RotationLevel()
         {
-            currentRotationLevel currentLevel = new currentRotationLevel();
+            currentLevel++;
+            if (currentLevel > currentRotationLevel.level3)
+            {
+                currentLevel = currentRotationLevel.level0;
+                Debug.Log("FIN DU JEU");
+                //ou fin de game
+            }
             
-            //switch case state pour savoir quel type de level on est la
             switch (currentLevel)
             {
                 case currentRotationLevel.level0:
-                    MapSwitchingFace(baseRotation);
+                    MapSwitchingFace(0);
                     break;
                 case currentRotationLevel.level1:
                     //donner sens de rotation de la map
-                    MapSwitchingFace(rotationMapLevl0);
+                    MapSwitchingFace(rotationMap);
                     break;
                 case currentRotationLevel.level2:
                     //donner sens contraire de rotation de la map
-                    MapSwitchingFace(-rotationMapLevl0);
+                    MapSwitchingFace(0);
                     break;
                 case currentRotationLevel.level3:
-                    MapSwitchingFace(rotationMapLevl0);
+                    MapSwitchingFace(rotationMap);
                     SpawnPics();
                     //rotationer la map et laissant le joueur en haut
                     //faire apparaitre les pics
@@ -68,9 +74,9 @@ namespace SimsFolder.Scripting.Manager
             }
         }
 
-        public void MapSwitchingFace(Vector2 direction)
+        public void MapSwitchingFace(float angle)
         {
-            map.transform.rotation = Quaternion.AngleAxis(direction.x, -Vector3.forward);
+            map.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         }
 
         public void SpawnPics()
