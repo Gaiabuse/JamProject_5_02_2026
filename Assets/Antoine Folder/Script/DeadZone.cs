@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DeadZone : MonoBehaviour
 {
-    BoxCollider boxCollider;
+    BoxCollider2D boxCollider;
 
     [SerializeField] float speed = 10;
     [SerializeField] float accelerateAmount = 1;
@@ -18,7 +18,7 @@ public class DeadZone : MonoBehaviour
 
     private void Start()
     {
-        boxCollider = GetComponent<BoxCollider>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void FixedUpdate()
@@ -45,16 +45,16 @@ public class DeadZone : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             Application.Quit();
             Debug.Log("FUCK");
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -67,7 +67,7 @@ public class DeadZone : MonoBehaviour
     {
         float x = Random.Range(boxCollider.size.x / 2 * -1, boxCollider.size.x / 2);
         float y = Random.Range(boxCollider.size.y / 2 * -1, boxCollider.size.y / 2);
-        float z = Random.Range(boxCollider.size.z / 2 * -1, boxCollider.size.z / 2);
+        float z = Random.Range(transform.localScale.z / 2 * -1, transform.localScale.z / 2);
 
         return new Vector3(x, y, z);
     }
