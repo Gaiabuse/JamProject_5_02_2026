@@ -14,9 +14,9 @@
     <setting file="file://$PROJECT_DIR$/Assets/Sim_Folder/Scripts/Managers/RotationLevelManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Sim_Folder/Scripts/ObjectsAttachScripts/ZoneEnter.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="39FzMz5wWLyPr3OBjP3bTwtQWlR" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -28,7 +28,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "sims",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -78,6 +78,7 @@
       <option name="presentableId" value="Default" />
       <updated>1770306565375</updated>
       <workItem from="1770306565376" duration="10985000" />
+      <workItem from="1770388252239" duration="794000" />
     </task>
     <servers />
   </component>

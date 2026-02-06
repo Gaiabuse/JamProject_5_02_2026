@@ -16,11 +16,17 @@ namespace SimsFolder.Scripting.Manager
         [Header("References")]
         [SerializeField]private ZoneEnter zoneEnter;
         [SerializeField]private GameObject map;
+        [SerializeField]private GameObject picsParent;
 
 
         [Header("Rotation Level")]
         [SerializeField] private float rotationMap; //est utile pour touts les levels levels
         [SerializeField]private currentRotationLevel currentLevel = currentRotationLevel.level0;
+        
+        [Header("Player Affectation")]
+        [SerializeField] private GameObject player_GO;
+        [SerializeField] private Transform start_T;
+        [SerializeField] private Transform end_T;
         
         private int currentLevelRotation = 0;
         private Vector2 baseRotation = Vector2.zero;
@@ -49,7 +55,6 @@ namespace SimsFolder.Scripting.Manager
             {
                 currentLevel = currentRotationLevel.level0;
                 Debug.Log("FIN DU JEU");
-                //ou fin de game
             }
             
             switch (currentLevel)
@@ -57,19 +62,18 @@ namespace SimsFolder.Scripting.Manager
                 case currentRotationLevel.level0:
                     MapSwitchingFace(0);
                     break;
-                case currentRotationLevel.level1:
-                    //donner sens de rotation de la map
+                case currentRotationLevel.level1: 
+                    PlayerGoUp(start_T);
                     MapSwitchingFace(rotationMap);
                     break;
                 case currentRotationLevel.level2:
-                    //donner sens contraire de rotation de la map
+                    PlayerGoUp(start_T);
                     MapSwitchingFace(0);
                     break;
                 case currentRotationLevel.level3:
                     MapSwitchingFace(rotationMap);
                     SpawnPics();
-                    //rotationer la map et laissant le joueur en haut
-                    //faire apparaitre les pics
+                    //on laisse le player en Up
                     break;
             }
         }
@@ -81,7 +85,16 @@ namespace SimsFolder.Scripting.Manager
 
         public void SpawnPics()
         {
-            
+            picsParent.SetActive(true);
+        }
+        #endregion
+
+
+        #region PlayerAffectation
+
+        private void PlayerGoUp(Transform movePlayerTo)
+        {
+            player_GO.transform.position = movePlayerTo.position;
         }
         #endregion
     }
