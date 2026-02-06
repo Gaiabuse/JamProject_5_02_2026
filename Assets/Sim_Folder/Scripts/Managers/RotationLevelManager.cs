@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace SimsFolder.Scripting.Manager
@@ -19,7 +20,7 @@ namespace SimsFolder.Scripting.Manager
         [SerializeField]private GameObject picsParent;
 
         [Header("Rotation Level")]
-        [SerializeField] private float rotationMap; //est utile pour touts les levels levels
+        [SerializeField] private float rotationMap;
         [SerializeField]private currentRotationLevel currentLevel = currentRotationLevel.level0;
         
         [Header("Player Affectation")]
@@ -35,11 +36,9 @@ namespace SimsFolder.Scripting.Manager
         private int currentLevelIndex = 0;
         private int currentLevelRotation = 0;
         private Vector2 baseRotation = Vector2.zero;
-
-        public GameObject gravity;
         
         /// <summary>
-        /// obseverToCheckCurrentRotation
+        /// obsever To Check Current Rotation
         /// </summary>
         private void OnEnable()
         {
@@ -73,16 +72,19 @@ namespace SimsFolder.Scripting.Manager
                 case currentRotationLevel.level1:
                     PlayerGoUp(start_T);
                     MapSwitchingFace(rotationMap);
+                    CameraShake();
                     break;
 
                 case currentRotationLevel.level2:
                     PlayerGoUp(start_T);
                     MapSwitchingFace(0);
+                    CameraShake();
                     break;
 
                 case currentRotationLevel.level3:
                     ReverseGravity();
                     MapSwitchingFace(rotationMap);
+                    CameraShake();
                     SpawnPics();
                     break;
             }
@@ -104,6 +106,13 @@ namespace SimsFolder.Scripting.Manager
         {
             picsParent.SetActive(true);
         }
+
+        public void CameraShake()
+        {
+            Camera main = Camera.main;
+
+            main.DOShakePosition(1f, 2f);
+        }
         #endregion
 
 
@@ -117,7 +126,7 @@ namespace SimsFolder.Scripting.Manager
 
         private void ReverseGravity()
         {
-            gravity.GetComponent<Rigidbody2D>().gravityScale = -1;
+            player_GO.GetComponent<Rigidbody2D>().gravityScale = -1;
         }
         #endregion
     }

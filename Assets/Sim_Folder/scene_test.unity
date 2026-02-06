@@ -340,7 +340,6 @@ MonoBehaviour:
   start_T: {fileID: 1582245607}
   end_T: {fileID: 1455601112}
   levelOrder: 010000000200000003000000
-  gravity: {fileID: 1439469686}
 --- !u!4 &319791862
 Transform:
   m_ObjectHideFlags: 0
@@ -891,7 +890,7 @@ Transform:
   m_GameObject: {fileID: 1439469686}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.383, z: 0}
+  m_LocalPosition: {x: 0.605, y: 0.735, z: 0}
   m_LocalScale: {x: 0.14437012, y: 0.14437012, z: 0.14437012}
   m_ConstrainProportionsScale: 0
   m_Children: []
