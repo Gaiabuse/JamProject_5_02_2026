@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9040843015055066503}
-  - component: {fileID: 72356995299649028}
   - component: {fileID: 601768190907274634}
+  - component: {fileID: 2397286920526687227}
   m_Layer: 0
   m_Name: PlatformGlitchCollider
   m_TagString: Untagged
@@ -35,8 +35,23 @@ Transform:
   - {fileID: 2477309098545525842}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &72356995299649028
-BoxCollider2D:
+--- !u!114 &601768190907274634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2186565146156125791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae50dae6e99b00d469d03b5e65c5c30e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformColliderGlitch
+  PlatformVisual: {fileID: 7680537642529660629}
+  AddForceUp: 250
+  GlitchCube: {fileID: 6717770289397356602, guid: 2178a49cc6a125d4ab2c1938bc348ae6, type: 3}
+--- !u!58 &2397286920526687227
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -65,35 +80,12 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 2, y: 4}
-  m_EdgeRadius: 0
---- !u!114 &601768190907274634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2186565146156125791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae50dae6e99b00d469d03b5e65c5c30e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformColliderGlitch
-  PlatformVisual: {fileID: 7680537642529660629}
+  m_Radius: 0.5
 --- !u!1001 &2541016504261287060
 PrefabInstance:
   m_ObjectHideFlags: 0

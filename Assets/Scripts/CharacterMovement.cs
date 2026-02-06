@@ -10,12 +10,14 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]private float jumpForce = 200f;
     [SerializeField]private int MaxJumpCount = 2;
     [SerializeField] private SpriteRenderer sr;
-    private float leftLimit = -9.81f;
-    private float rightLimit = 9.81f;
+
+    [SerializeField] float screenLimit = -9.81f;
+
     private int jumpCount = 0;
     private InputSystem_Actions inputSystem;
     private bool isInversed = false;
     private Camera cam;
+
     void Awake()
     {
         inputSystem = new InputSystem_Actions();
@@ -23,11 +25,13 @@ public class CharacterMovement : MonoBehaviour
         isInversed = false;
         cam = Camera.main;
         EnhancedTouchSupport.Enable();
-        if (cam != null)
+
+        /*if (cam != null)
         {
-            rightLimit = cam.orthographicSize*cam.aspect - sr.size.x/2;
-            leftLimit = -rightLimit;
-        }
+            Vector3 CamSize = cam.WorldToViewportPoint(new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0));
+
+            screenLimit = CamSize.x;
+        }*/
     }
 
     private void OnEnable()
@@ -62,8 +66,19 @@ public class CharacterMovement : MonoBehaviour
         float directionMultiplier = isInversed ? -1f : 1f;
         rb.linearVelocityX = moveDirectionX * speed * directionMultiplier;
         
-        float clampedX = Mathf.Clamp(transform.position.x, leftLimit, rightLimit);
+        float clampedX = Mathf.Clamp(transform.position.x, -screenLimit, screenLimit);
         transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
+
+
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
+            Debug.Log("Left");
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
+            Debug.Log("Right");
+        }
     }
     
 
