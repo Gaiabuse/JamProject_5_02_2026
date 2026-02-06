@@ -71,6 +71,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (jumpCount < MaxJumpCount)
         {
+            rb.linearVelocity = new Vector2(0, 0);
             rb.AddForce(transform.up * jumpForce);
             jumpCount++;
         }
