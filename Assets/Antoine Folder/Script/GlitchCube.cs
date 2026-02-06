@@ -31,6 +31,16 @@ public class GlitchCube : MonoBehaviour
             transform.localScale = RandomSize();
             timerSize = Random.Range(ChangeSize.x, ChangeSize.y);
         }
+
+        Camera cam = Camera.main;
+
+        if (cam.transform.position.y > transform.position.y)
+        {
+            if (Camera.main.transform.position.y - transform.position.y > 10)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     Vector3 RandomSize()
