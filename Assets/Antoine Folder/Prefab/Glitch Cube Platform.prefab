@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2544547391730943779}
   - component: {fileID: 3336916646034662369}
   m_Layer: 0
-  m_Name: Glitch Cube
+  m_Name: Glitch Cube Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2e1dfeecab7cbf2469d268cdd9039a91, type: 2}
+  - {fileID: 2100000, guid: e361f6062eea01b4c95f23d340e3d4a8, type: 2}
   - {fileID: 2100000, guid: 1662852850f85384d96b9390aa01a015, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -104,8 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e38923e4bc342a046a5f184a9ef78b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlitchCube
-  RandomSizeSmallCube: {x: 0.1, y: 0.8}
-  RandomSizeBigCube: {x: 1.7, y: 3.2}
-  ChangeSize: {x: 0.15, y: 0.75}
-  ShakeRandom: {x: 0, y: 0.35}
-  CanDelete: 1
+  RandomSizeSmallCube: {x: 0.1, y: 0.35}
+  RandomSizeBigCube: {x: 0.35, y: 0.75}
+  ChangeSize: {x: 0.1, y: 0.75}
+  ShakeRandom: {x: 0, y: 0.25}
+  CanDelete: 0

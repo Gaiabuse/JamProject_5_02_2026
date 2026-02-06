@@ -12,6 +12,8 @@ public class GlitchCube : MonoBehaviour
     float shake;
     Vector3 ogPosition;
 
+    [SerializeField] bool CanDelete;
+
     private void Start()
     {
         transform.localScale = RandomSize();
@@ -34,7 +36,7 @@ public class GlitchCube : MonoBehaviour
 
         Camera cam = Camera.main;
 
-        if (cam.transform.position.y > transform.position.y)
+        if (cam.transform.position.y > transform.position.y && CanDelete)
         {
             if (Camera.main.transform.position.y - transform.position.y > 10)
             {
