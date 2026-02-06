@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030fb82bc79fb9a408b0b1af4d6be868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  WindStrength: 5
+  WindStrength: 4
   WindDirection: {x: 0, y: 1}
 --- !u!61 &1949759240251658815
 BoxCollider2D:
@@ -81,7 +81,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 2.3038924}
+  m_Offset: {x: 0, y: 1.485016}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -91,7 +91,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 3.5657954}
+  m_Size: {x: 1, y: 1.9280431}
   m_EdgeRadius: 0
 --- !u!1 &5320230307236479553
 GameObject:
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4236190645874764827}
   m_Layer: 0
   m_Name: PlatformVent
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +121,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.5396, y: -0.33, z: 0}
-  m_LocalScale: {x: 3.9813902, y: 0.4977, z: 1}
+  m_LocalScale: {x: 3.9813902, y: 0.44006634, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6867429357035532059}
