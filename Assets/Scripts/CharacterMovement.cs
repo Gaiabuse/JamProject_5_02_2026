@@ -6,11 +6,13 @@ using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 public class CharacterMovement : MonoBehaviour
 {
-    [SerializeField]private Rigidbody2D rb;
+    private Rigidbody2D rb;
+    private SpriteRenderer sr;
+    Animator animator;
+
     [SerializeField]private float speed = 5f;
     [SerializeField]private float jumpForce = 200f;
     [SerializeField]private int MaxJumpCount = 2;
-    [SerializeField] private SpriteRenderer sr;
 
     [SerializeField] float screenLimit = -9.81f;
 
@@ -23,6 +25,10 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] float groundCheckRadius;
     [SerializeField] LayerMask groundLayer;
 
+    bool isGrounded;
+    bool isMoving;
+    bool flip;
+
     void Awake()
     {
         inputSystem = new InputSystem_Actions();
@@ -31,12 +37,18 @@ public class CharacterMovement : MonoBehaviour
         cam = Camera.main;
         EnhancedTouchSupport.Enable();
 
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+
         /*if (cam != null)
         {
             Vector3 CamSize = cam.WorldToViewportPoint(new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0));
 
             screenLimit = CamSize.x;
         }*/
+
+        flip = sr.flipX;
     }
 
     private void OnEnable()
@@ -49,14 +61,10 @@ public class CharacterMovement : MonoBehaviour
         inputSystem.Player.Jump.performed -= Jump;
     }
 
-    private void SwitchMovement()
-    {
-        isInversed = !isInversed;
-    }
-
     private void FixedUpdate()
     {
         if (GroundCheck()) jumpCount = 0;
+        else animator.SetFloat("Y Velocity", rb.linearVelocityY);
     }
 
     private void Update()
@@ -66,8 +74,11 @@ public class CharacterMovement : MonoBehaviour
             Vector2 screenPos = Touch.activeTouches[0].screenPosition;
             float moveDirectionX = MoveDirection(screenPos);
 
-            if (screenPos.x > 0) rb.linearVelocityX = speed * moveDirectionX;
-            else rb.linearVelocityX = speed * moveDirectionX;
+            FlipSprites(moveDirectionX);
+
+            rb.linearVelocityX = speed * moveDirectionX;
+
+            if (!isMoving) animator.SetBool("Move", true); isMoving = true;
         }
         else
         {
@@ -76,10 +87,18 @@ public class CharacterMovement : MonoBehaviour
 
             if (horizontal != 0)
             {
-                if (horizontal > 0) rb.linearVelocityX = speed;
-                else rb.linearVelocityX = -speed;
+                if (horizontal >= 0.35f) rb.linearVelocityX = speed;
+                else if (horizontal <= -0.35f) rb.linearVelocityX = -speed;
+
+                FlipSprites(horizontal);
+
+                if (!isMoving) animator.SetBool("Move", true); isMoving = true;
             }
-            else rb.linearVelocityX = 0;
+            else
+            {
+                rb.linearVelocityX = 0;
+                if (isMoving) animator.SetBool("Move", false); isMoving = false;
+            }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -106,7 +125,7 @@ public class CharacterMovement : MonoBehaviour
         if (jumpCount < MaxJumpCount)
         {
             rb.linearVelocity = new Vector2(0, 0);
-            rb.AddForce(transform.up * jumpForce);
+            rb.AddForce(transform.up * jumpForce / 10);
             jumpCount++;
         }
     }
@@ -133,6 +152,21 @@ public class CharacterMovement : MonoBehaviour
 
     bool GroundCheck()
     {
-        return Physics2D.OverlapCircle(GroundCheckTransforme.position, groundCheckRadius, groundLayer);
+        bool ground = Physics2D.OverlapCircle(GroundCheckTransforme.position, groundCheckRadius, groundLayer);
+        if (ground != isGrounded)
+        {
+            isGrounded = ground;
+            animator.SetBool("Grounded", ground);
+        }
+
+        return ground;
+    }
+
+    void FlipSprites(float direction)
+    {
+        if (direction > 0) flip = true;
+        else flip = false;
+
+        if (flip != sr.flipX) sr.flipX = flip;
     }
 }

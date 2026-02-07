@@ -52,14 +52,9 @@ public class DeadZone : MonoBehaviour
             Application.Quit();
             Debug.Log("FUCK");
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("DeleteWhenDeathZone"))
         {
-            Application.Quit();
-            Debug.Log("FUCK");
+            Destroy(collision.gameObject);
         }
     }
 

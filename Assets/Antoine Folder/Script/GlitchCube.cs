@@ -12,7 +12,7 @@ public class GlitchCube : MonoBehaviour
     float shake;
     Vector3 ogPosition;
 
-    [SerializeField] bool CanDelete;
+    [SerializeField] int deleteType;
 
     private void Start()
     {
@@ -36,9 +36,9 @@ public class GlitchCube : MonoBehaviour
 
         Camera cam = Camera.main;
 
-        if (cam.transform.position.y > transform.position.y && CanDelete)
+        if (cam.transform.position.y > transform.position.y && deleteType == 0)
         {
-            if (Camera.main.transform.position.y - transform.position.y > 10)
+            if (Camera.main.transform.position.y - transform.position.y > 15)
             {
                 Destroy(gameObject);
             }
