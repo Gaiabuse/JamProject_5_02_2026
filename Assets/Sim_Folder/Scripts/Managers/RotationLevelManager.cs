@@ -67,6 +67,7 @@ namespace SimsFolder.Scripting.Manager
             {
                 case currentRotationLevel.level0:
                     MapSwitchingFace(0);
+                    ReverseGravity(1);
                     break;
 
                 case currentRotationLevel.level1:
@@ -82,7 +83,7 @@ namespace SimsFolder.Scripting.Manager
                     break;
 
                 case currentRotationLevel.level3:
-                    ReverseGravity();
+                    ReverseGravity(-1);
                     MapSwitchingFace(rotationMap);
                     CameraShake();
                     SpawnPics();
@@ -111,7 +112,14 @@ namespace SimsFolder.Scripting.Manager
         {
             Camera main = Camera.main;
 
-            main.DOShakePosition(1f, 2f);
+            main.transform.DOShakePosition(
+                2f,
+                0.25f,
+                10,
+                45f,
+                false,
+                true
+            );
         }
         #endregion
 
@@ -124,10 +132,12 @@ namespace SimsFolder.Scripting.Manager
         }
 
 
-        private void ReverseGravity()
+        private void ReverseGravity(int value)
         {
-            player_GO.GetComponent<Rigidbody2D>().gravityScale = -1;
+            player_GO.GetComponent<Rigidbody2D>().gravityScale = value;
         }
+        
+        
         #endregion
     }
 }
