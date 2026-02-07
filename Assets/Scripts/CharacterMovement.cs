@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch; 
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
@@ -17,6 +18,10 @@ public class CharacterMovement : MonoBehaviour
     private InputSystem_Actions inputSystem;
     private bool isInversed = false;
     private Camera cam;
+
+    [SerializeField] Transform GroundCheckTransforme;
+    [SerializeField] float groundCheckRadius;
+    [SerializeField] LayerMask groundLayer;
 
     void Awake()
     {
@@ -49,36 +54,40 @@ public class CharacterMovement : MonoBehaviour
         isInversed = !isInversed;
     }
 
+    private void FixedUpdate()
+    {
+        if (GroundCheck()) jumpCount = 0;
+    }
+
     private void Update()
     {
-        float moveDirectionX = 0;
-        
         if (Touch.activeTouches.Count > 0)
         {
             Vector2 screenPos = Touch.activeTouches[0].screenPosition;
-            moveDirectionX = MoveDirection(screenPos);
+            float moveDirectionX = MoveDirection(screenPos);
+
+            if (screenPos.x > 0) rb.linearVelocityX = speed * moveDirectionX;
+            else rb.linearVelocityX = speed * moveDirectionX;
         }
         else
         {
-            moveDirectionX = 0;
-        }
-        
-        float directionMultiplier = isInversed ? -1f : 1f;
-        rb.linearVelocityX = moveDirectionX * speed * directionMultiplier;
-        
-        float clampedX = Mathf.Clamp(transform.position.x, -screenLimit, screenLimit);
-        transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
 
+            if (horizontal != 0)
+            {
+                if (horizontal > 0) rb.linearVelocityX = speed;
+                else rb.linearVelocityX = -speed;
+            }
+            else rb.linearVelocityX = 0;
 
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            Debug.Log("Left");
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                JumpKey();
+            }
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            Debug.Log("Right");
-        }
+        Border();
     }
     
 
@@ -91,21 +100,39 @@ public class CharacterMovement : MonoBehaviour
             jumpCount++;
         }
     }
-    
-    private void OnCollisionEnter2D(Collision2D other)
+
+    void JumpKey()
     {
-        Debug.Log(other.gameObject.name);
-        if (other.gameObject.CompareTag("Floor"))
+        if (jumpCount < MaxJumpCount)
         {
-            jumpCount = 0;
+            rb.linearVelocity = new Vector2(0, 0);
+            rb.AddForce(transform.up * jumpForce);
+            jumpCount++;
         }
-        
+    }
+    
+
+    void Border()
+    {
+        if (transform.position.x > screenLimit)
+        {
+            transform.position = new Vector3(screenLimit, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x < -screenLimit)
+        {
+            transform.position = new Vector3(-screenLimit, transform.position.y, transform.position.z);
+        }
     }
 
     private float MoveDirection(Vector2 screenPos)
     {
         Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, Mathf.Abs(cam.transform.position.z)));
-        
+
         return worldPos.x > 0 ? 1f : -1f;
+    }
+
+    bool GroundCheck()
+    {
+        return Physics2D.OverlapCircle(GroundCheckTransforme.position, groundCheckRadius, groundLayer);
     }
 }

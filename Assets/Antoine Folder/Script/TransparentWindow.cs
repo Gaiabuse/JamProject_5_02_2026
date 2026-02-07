@@ -55,7 +55,7 @@ public class TransparentWindow : MonoBehaviour
         SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED);
         SetLayeredWindowAttributes(hWnd, 0, 0, LWA_COLORKEY);
 
-        //SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
+        SetClickthrough(false);
 
         SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, 0);
 #endif 
